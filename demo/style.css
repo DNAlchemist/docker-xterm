@@ -1,0 +1,17 @@
+body {
+    font-family: helvetica, sans-serif, arial;
+    font-size: 1em;
+    color: #111;
+    background: #000000;
+}
+
+h1 {
+    text-align: center;
+}
+
+#terminal-container {
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+    padding: 2px;
+}
