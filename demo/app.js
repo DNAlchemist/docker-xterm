@@ -3,9 +3,21 @@ var app = express();
 var expressWs = require('express-ws')(app);
 var os = require('os');
 var pty = require('node-pty');
+var auth = require('basic-auth');
 
 var terminals = {},
     logs = {};
+
+app.use((req, res, next) => {
+  if (process.env.USERNAME) {
+    var authResult = auth(req);
+    if (!authResult || (authResult.name !== process.env.USERNAME || authResult.pass !== process.env.PASSWORD)) {
+      res.set("WWW-Authenticate", "Basic");
+      return res.status(401).json({ message: 'Invalid Authentication Credentials' });
+    }
+  }
+  next();
+});
 
 app.use('/build', express.static(__dirname + '/../build'));
 
