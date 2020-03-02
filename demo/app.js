@@ -21,6 +21,10 @@ app.use((req, res, next) => {
 
 app.use('/build', express.static(__dirname + '/../build'));
 
+app.get('/health', function(req, res){
+  res.send("ok");
+});
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
