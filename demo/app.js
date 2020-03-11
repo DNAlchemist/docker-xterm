@@ -25,6 +25,10 @@ app.get('/health', function(req, res){
   res.send("ok");
 });
 
+app.get('/favicon.svg', function(req, res){
+  res.sendFile(__dirname + '/favicon.svg');
+});
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
