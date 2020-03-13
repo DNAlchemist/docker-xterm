@@ -2,8 +2,10 @@ var express = require('express');
 var app = express();
 var expressWs = require('express-ws')(app);
 var os = require('os');
+var fs = require('fs');
 var pty = require('node-pty');
 var auth = require('basic-auth');
+var uuid = require('uuid/v4')
 
 var terminals = {},
     logs = {};
@@ -26,13 +28,15 @@ app.get('/health', function(req, res){
 });
 
 if (process.env.FAVICON_SVG_PATH) {
-  app.get('/favicon.svg', function(req, res){
+  app.get(/\/favicon-.*\.svg/, function(req, res){
     res.sendFile(__dirname + "/" + process.env.FAVICON_SVG_PATH);
   });
 }
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  fs.readFile(__dirname + '/index.html', 'UTF-8', function(err, content) {
+    res.send(content.replace("${uuid}", uuid()))
+  });
 });
 
 app.get('/style.css', function(req, res){
