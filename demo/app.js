@@ -27,6 +27,7 @@ app.get('/health', function(req, res){
 
 if (process.env.FAVICON_SVG_PATH) {
   app.get('/favicon.svg', function(req, res){
+    res.set("Cache-Control", "max-age=1")
     res.sendFile(__dirname + "/" + process.env.FAVICON_SVG_PATH);
   });
 }
